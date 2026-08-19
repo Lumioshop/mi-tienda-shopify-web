@@ -1,67 +1,97 @@
 {{ 'section-lumio-home.css' | asset_url | stylesheet_tag }}
 
-<section class="lumio-home" id="lumio-home-{{ section.id }}">
-  <div class="lumio-home__inner">
-    <div class="lumio-home__intro">
-      <span class="lumio-home__eyebrow">LUMIO / SMART EVERYDAY</span>
-      <h1>{{ section.settings.heading }}</h1>
-      <p>{{ section.settings.subheading }}</p>
-      <a class="lumio-home__cta" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }} <span>→</span></a>
+<section class="lumio-landing" id="lumio-{{ section.id }}">
+  <div class="lumio-landing__hero">
+    <div class="lumio-orb lumio-orb--tl"></div>
+    <div class="lumio-orb lumio-orb--br"></div>
+    <div class="lumio-orb lumio-orb--right"></div>
+    <div class="lumio-dots lumio-dots--left">{% for i in (1..12) %}<i></i>{% endfor %}</div>
+    <div class="lumio-dots lumio-dots--right">{% for i in (1..12) %}<i></i>{% endfor %}</div>
+
+    <div class="lumio-floating lumio-floating--air">⌁</div>
+    <div class="lumio-floating lumio-floating--bolt">ϟ</div>
+    <div class="lumio-floating lumio-floating--ring">○</div>
+    <div class="lumio-floating lumio-floating--cross">×</div>
+
+    <div class="lumio-hero__topline">
+      <span>LUMIO</span>
+      <span>SMART GADGETS / EVERYDAY LIFE</span>
+      <span>SCROLL ↓</span>
     </div>
 
-    <div class="lumio-home__products">
+    <div class="lumio-hero__content">
+      <p class="lumio-hero__eyebrow">NUEVOS DESCUBRIMIENTOS · 2026</p>
+      <h1>{{ section.settings.heading }}</h1>
+      <p class="lumio-hero__subheading">{{ section.settings.subheading }}</p>
+      <a class="lumio-hero__cta" href="{{ section.settings.cta_link }}">
+        <span>{{ section.settings.cta_label }}</span><b>↗</b>
+      </a>
+    </div>
+
+    <div class="lumio-hero__product">
+      {% assign hero_product = section.blocks.first.settings.product %}
+      {% assign hero_image = section.blocks.first.settings.image %}
+      {% if hero_image != blank %}
+        {{ hero_image | image_url: width: 1100 | image_tag: loading: 'eager', widths: '600,800,1000,1100', class: 'lumio-hero__product-image', alt: section.blocks.first.settings.title | escape }}
+      {% elsif hero_product != blank and hero_product.featured_image != blank %}
+        {{ hero_product.featured_image | image_url: width: 1100 | image_tag: loading: 'eager', widths: '600,800,1000,1100', class: 'lumio-hero__product-image', alt: hero_product.title | escape }}
+      {% endif %}
+      <div class="lumio-hero__product-tag">01 / FEATURED<br><strong>{{ section.blocks.first.settings.kicker }}</strong></div>
+    </div>
+
+    <div class="lumio-hero__bottomline">
+      <span>TECNOLOGÍA ÚTIL</span>
+      <span>DISEÑO QUE SE SIENTE</span>
+      <span>PEQUEÑAS COSAS. GRAN DIFERENCIA.</span>
+    </div>
+  </div>
+
+  <div class="lumio-products">
+    <div class="lumio-products__header">
+      <div><span class="lumio-label">01 — LA SELECCIÓN</span><h2>Pequeñas cosas.<br><em>Mucho más útiles.</em></h2></div>
+      <p>Gadgets que solucionan algo, hacen tu día más fácil o simplemente te sacan una sonrisa.</p>
+    </div>
+
+    <div class="lumio-products__grid">
       {% for block in section.blocks %}
         {% assign product = block.settings.product %}
-        <article class="lumio-product-card lumio-product-card--{{ forloop.index }}" {{ block.shopify_attributes }}>
-          <a href="{% if product != blank %}{{ product.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="lumio-product-card__media">
+        <article class="lumio-card lumio-card--{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <a href="{% if product != blank %}{{ product.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="lumio-card__visual">
+            <span class="lumio-card__number">0{{ forloop.index }}</span>
             {% if block.settings.image != blank %}
-              {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '360, 540, 720, 1000', class: 'lumio-product-card__image', alt: block.settings.title | escape }}
+              {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '400,600,800,1000', class: 'lumio-card__image', alt: block.settings.title | escape }}
             {% elsif product != blank and product.featured_image != blank %}
-              {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '360, 540, 720, 1000', class: 'lumio-product-card__image', alt: product.title | escape }}
+              {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '400,600,800,1000', class: 'lumio-card__image', alt: product.title | escape }}
             {% endif %}
-            <span class="lumio-product-card__arrow">↗</span>
+            <span class="lumio-card__arrow">↗</span>
           </a>
-          <div class="lumio-product-card__copy">
-            {% if block.settings.kicker != blank %}<span>{{ block.settings.kicker }}</span>{% endif %}
-            <h2>{% if block.settings.title != blank %}{{ block.settings.title }}{% elsif product != blank %}{{ product.title }}{% endif %}</h2>
-            {% if product != blank %}<div class="lumio-product-card__price">{{ product.price | money }}</div>{% endif %}
+          <div class="lumio-card__info">
+            <div><span class="lumio-card__kicker">{{ block.settings.kicker }}</span><h3>{% if block.settings.title != blank %}{{ block.settings.title }}{% elsif product != blank %}{{ product.title }}{% endif %}</h3></div>
+            {% if product != blank %}<strong>{{ product.price | money }}</strong>{% endif %}
           </div>
         </article>
       {% endfor %}
     </div>
-
-    <div class="lumio-home__trust">
-      <span>✦ Curated gadgets</span><span>✦ Designed for everyday life</span><span>✦ Secure checkout</span>
-    </div>
   </div>
+
+  <div class="lumio-marquee"><div><span>SMARTER EVERYDAY</span><i>✦</i><span>CURIOUS BY NATURE</span><i>✦</i><span>MADE FOR REAL LIFE</span><i>✦</i><span>SMARTER EVERYDAY</span><i>✦</i></div></div>
 </section>
 
 {% schema %}
 {
-  "name": "Lumio home hero",
+  "name": "Lumio editorial home",
   "tag": "section",
   "class": "section-lumio-home",
   "settings": [
-    {"type":"text","id":"heading","label":"Heading","default":"Tecnología que encaja en tu día."},
-    {"type":"textarea","id":"subheading","label":"Subheading","default":"Gadgets útiles, diseño limpio y pequeños descubrimientos que hacen la vida un poco mejor."},
-    {"type":"text","id":"cta_label","label":"CTA label","default":"Descubrir Lumio"},
+    {"type":"text","id":"heading","label":"Hero heading","default":"Tecnología que hace la vida más divertida."},
+    {"type":"textarea","id":"subheading","label":"Hero subheading","default":"Gadgets curiosos, útiles y diseñados para convertir lo cotidiano en algo un poco más extraordinario."},
+    {"type":"text","id":"cta_label","label":"CTA label","default":"Explorar Lumio"},
     {"type":"url","id":"cta_link","label":"CTA link"}
   ],
   "blocks": [
-    {
-      "type":"product_card",
-      "name":"Product card",
-      "settings":[
-        {"type":"image_picker","id":"image","label":"Product image"},
-        {"type":"product","id":"product","label":"Product"},
-        {"type":"text","id":"kicker","label":"Kicker","default":"FEATURED"},
-        {"type":"text","id":"title","label":"Title","default":"Producto destacado"}
-      ]
-    }
+    {"type":"product_card","name":"Product","settings":[{"type":"image_picker","id":"image","label":"Product image"},{"type":"product","id":"product","label":"Product"},{"type":"text","id":"kicker","label":"Kicker","default":"FEATURED"},{"type":"text","id":"title","label":"Title","default":"Producto Lumio"}]}
   ],
   "max_blocks": 3,
-  "presets": [
-    {"name":"Lumio home","blocks":[{"type":"product_card"},{"type":"product_card"},{"type":"product_card"}]}
-  ]
+  "presets": [{"name":"Lumio editorial home","blocks":[{"type":"product_card"},{"type":"product_card"},{"type":"product_card"}]}]
 }
 {% endschema %}
