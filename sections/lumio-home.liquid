@@ -1,6 +1,12 @@
 {{ 'section-lumio-home.css' | asset_url | stylesheet_tag }}
 
-<section class="lumio-landing" id="lumio-{{ section.id }}" style="{% if section.settings.background_image != blank %}--lumio-bg-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');{% endif %} --lumio-bg-size: {{ section.settings.background_size }}%; --lumio-bg-blur: {{ section.settings.background_blur }}px;">
+<section class="lumio-landing" id="lumio-{{ section.id }}"{% if section.settings.background_image != blank %} style="--lumio-bg-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');"{% endif %}>
+  <style>
+    #lumio-{{ section.id }}::before {
+      background-size: {{ section.settings.background_size }}% auto;
+      filter: blur({{ section.settings.background_blur }}px);
+    }
+  </style>
   <div class="lumio-landing__hero">
     {% if section.settings.hero_banner != blank %}
       <a class="lumio-banner" href="{{ section.settings.hero_link | default: routes.all_products_collection_url }}" aria-label="Lumio">
@@ -38,5 +44,5 @@
 </section>
 
 {% schema %}
-{"name":"Lumio editorial home","tag":"section","class":"section-lumio-home","settings":[{"type":"image_picker","id":"hero_banner","label":"Banner principal de Lumio","info":"Sube aquí la imagen del banner que quieres usar en la cabecera."},{"type":"url","id":"hero_link","label":"Enlace del banner"},{"type":"image_picker","id":"background_image","label":"Fondo general de Lumio","info":"Imagen de fondo para toda la página."},{"type":"range","id":"background_size","label":"Tamaño del fondo","min":40,"max":180,"step":5,"unit":"%","default":100,"info":"Controla el tamaño de la imagen de fondo."},{"type":"range","id":"background_blur","label":"Difuminado del fondo","min":0,"max":30,"step":1,"unit":"px","default":8,"info":"Controla cuánto se difumina la imagen de fondo."}],"blocks":[{"type":"product_card","name":"Product","settings":[{"type":"image_picker","id":"image","label":"Product image"},{"type":"product","id":"product","label":"Product"},{"type":"text","id":"kicker","label":"Kicker","default":"FEATURED"},{"type":"text","id":"title","label":"Title","default":"Producto Lumio"}]}],"max_blocks":3,"presets":[{"name":"Lumio editorial home","blocks":[{"type":"product_card"},{"type":"product_card"},{"type":"product_card"}]}]}
+{"name":"Lumio editorial home","tag":"section","class":"section-lumio-home","settings":[{"type":"image_picker","id":"hero_banner","label":"Banner principal de Lumio","info":"Sube aquí la imagen del banner que quieres usar en la cabecera."},{"type":"url","id":"hero_link","label":"Enlace del banner"},{"type":"image_picker","id":"background_image","label":"Fondo general de Lumio","info":"Imagen de fondo para toda la página."},{"type":"range","id":"background_size","label":"Tamaño del fondo","min":20,"max":200,"step":5,"unit":"%","default":100,"info":"Controla directamente el tamaño de la imagen de fondo."},{"type":"range","id":"background_blur","label":"Difuminado del fondo","min":0,"max":30,"step":1,"unit":"px","default":8,"info":"Controla directamente el desenfoque de la imagen de fondo."}],"blocks":[{"type":"product_card","name":"Product","settings":[{"type":"image_picker","id":"image","label":"Product image"},{"type":"product","id":"product","label":"Product"},{"type":"text","id":"kicker","label":"Kicker","default":"FEATURED"},{"type":"text","id":"title","label":"Title","default":"Producto Lumio"}]}],"max_blocks":3,"presets":[{"name":"Lumio editorial home","blocks":[{"type":"product_card"},{"type":"product_card"},{"type":"product_card"}]}]}
 {% endschema %}
