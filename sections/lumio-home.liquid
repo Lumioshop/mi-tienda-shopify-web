@@ -1,6 +1,6 @@
 {{ 'section-lumio-home.css' | asset_url | stylesheet_tag }}
 
-<section class="lumio-landing" id="lumio-{{ section.id }}">
+<section class="lumio-landing" id="lumio-{{ section.id }}"{% if section.settings.background_image != blank %} style="--lumio-bg-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');"{% endif %}>
   <div class="lumio-landing__hero">
     {% if section.settings.hero_banner != blank %}
       <a class="lumio-banner" href="{{ section.settings.hero_link | default: routes.all_products_collection_url }}" aria-label="Lumio">
@@ -52,7 +52,8 @@
   "class": "section-lumio-home",
   "settings": [
     {"type":"image_picker","id":"hero_banner","label":"Banner principal de Lumio","info":"Sube aquí la imagen del banner que quieres usar en la cabecera."},
-    {"type":"url","id":"hero_link","label":"Enlace del banner","info":"Opcional. Si lo dejas vacío enlazará con todos los productos."}
+    {"type":"url","id":"hero_link","label":"Enlace del banner","info":"Opcional. Si lo dejas vacío enlazará con todos los productos."},
+    {"type":"image_picker","id":"background_image","label":"Fondo general de Lumio","info":"Imagen de fondo para toda la página. Se aplica con desenfoque y una capa suave para que el contenido siga siendo legible."}
   ],
   "blocks": [
     {"type":"product_card","name":"Product","settings":[{"type":"image_picker","id":"image","label":"Product image"},{"type":"product","id":"product","label":"Product"},{"type":"text","id":"kicker","label":"Kicker","default":"FEATURED"},{"type":"text","id":"title","label":"Title","default":"Producto Lumio"}]}
