@@ -15,6 +15,13 @@
       background-size: {{ section.settings.background_size }}% auto;
       filter: blur({{ section.settings.background_blur }}px);
     }
+    #lumio-{{ section.id }} .lumio-card__info {
+      border: 1.5px solid rgba(23,23,25,.12);
+      box-shadow: 0 8px 25px rgba(23,23,25,.08), 0 0 0 1px rgba(255,255,255,.55) inset;
+    }
+    #lumio-{{ section.id }} .lumio-card:hover .lumio-card__info {
+      border-color: rgba(23,23,25,.20);
+    }
   </style>
 
   <div class="lumio-landing__hero">
