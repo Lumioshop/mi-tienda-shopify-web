@@ -1,0 +1,51 @@
+/* Lumio benefits polish */
+.lumio-benefits{
+  max-width:1180px!important;
+  margin:0 auto!important;
+  padding:28px 0 30px!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:14px!important;
+  border-bottom:0!important;
+}
+.lumio-benefit{
+  min-height:104px;
+  box-sizing:border-box;
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+  padding:18px 20px!important;
+  border:1px solid rgba(23,23,25,.08)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.72)!important;
+  box-shadow:0 8px 28px rgba(23,23,25,.055)!important;
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease!important;
+}
+.lumio-benefit:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 34px rgba(23,23,25,.09)!important;
+  border-color:rgba(255,133,0,.2)!important;
+}
+.lumio-benefit:last-child{border-right:1px solid rgba(23,23,25,.08)!important}
+.lumio-benefit__icon{
+  width:48px!important;
+  height:48px!important;
+  flex:0 0 48px!important;
+  border-radius:14px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#fff3e3!important;
+  font-size:23px!important;
+}
+.lumio-benefit strong{font-size:13px!important;font-weight:800!important;color:#171719}
+.lumio-benefit small{font-size:11px!important;line-height:1.4!important;color:#666!important}
+.lumio-bottom-benefits>div:nth-child(3) span{font-size:0}
+.lumio-bottom-benefits>div:nth-child(3) span::before{content:'🚚';font-size:27px}
+@media(max-width:900px){
+  .lumio-benefits{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;padding:22px 18px 26px!important}
+  .lumio-benefit{border-right:1px solid rgba(23,23,25,.08)!important}
+}
+@media(max-width:600px){
+  .lumio-benefits{grid-template-columns:1fr!important;padding:16px 14px 22px!important;gap:10px!important}
+  .lumio-benefit{min-height:88px;padding:15px!important}
+}
