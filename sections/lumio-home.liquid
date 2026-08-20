@@ -15,22 +15,35 @@
       filter: blur({{ section.settings.background_blur }}px);
     }
   </style>
+
   <div class="lumio-landing__hero">
     {% if section.settings.hero_banner != blank %}
       <a class="lumio-banner" href="{{ section.settings.hero_link | default: routes.all_products_collection_url }}" aria-label="Lumio">
         {{ section.settings.hero_banner | image_url: width: 2400 | image_tag: loading: 'eager', widths: '800,1200,1600,2000,2400', class: 'lumio-banner__image', alt: 'Lumio' }}
       </a>
     {% else %}
-      <div class="lumio-banner lumio-banner--placeholder"><span>Lumio</span><small>Sube aquí el banner de Lumio desde Personalizar → Imagen del banner</small></div>
+      <div class="lumio-banner lumio-banner--placeholder"><span>Lumio</span></div>
     {% endif %}
+  </div>
+
+  <div class="lumio-benefits" aria-label="Ventajas de Lumio">
+    <div class="lumio-benefit"><span class="lumio-benefit__icon">🚚</span><div><strong>Envío rápido</strong><small>Recibe tu pedido en 24/48 horas.</small></div></div>
+    <div class="lumio-benefit"><span class="lumio-benefit__icon">♢</span><div><strong>Garantía de calidad</strong><small>Productos probados y 100% seguros.</small></div></div>
+    <div class="lumio-benefit"><span class="lumio-benefit__icon">♧</span><div><strong>Atención al cliente</strong><small>Estamos aquí para ayudarte.</small></div></div>
+    <div class="lumio-benefit"><span class="lumio-benefit__icon">↻</span><div><strong>Devoluciones fáciles</strong><small>30 días para cambios o devoluciones.</small></div></div>
   </div>
 
   <div class="lumio-products">
     <div class="lumio-products__header">
-      <div><h2>Cosas que no sabías que necesitabas.</h2></div>
+      <div>
+        <span class="lumio-label">SELECCIÓN DESTACADA</span>
+        <h2>Cosas que no sabías que <em>necesitabas.</em></h2>
+      </div>
+      <a class="lumio-products__all" href="{{ routes.all_products_collection_url }}">Ver todos los productos <span>→</span></a>
     </div>
+
     <div class="lumio-products__grid">
-      {% for block in section.blocks %}
+      {% for block in section.blocks limit: 3 %}
         {% assign product = block.settings.product %}
         <article class="lumio-card lumio-card--{{ forloop.index }}" {{ block.shopify_attributes }}>
           <a href="{% if product != blank %}{{ product.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="lumio-card__visual">
@@ -42,11 +55,42 @@
             {% endif %}
             <span class="lumio-card__arrow">↗</span>
           </a>
-          <div class="lumio-card__info"><div><span class="lumio-card__kicker">{{ block.settings.kicker }}</span><h3>{% if block.settings.title != blank %}{{ block.settings.title }}{% elsif product != blank %}{{ product.title }}{% endif %}</h3></div>{% if product != blank %}<strong>{{ product.price | money }}</strong>{% endif %}</div>
+          <div class="lumio-card__info">
+            <div><span class="lumio-card__kicker">{{ block.settings.kicker }}</span><h3>{% if block.settings.title != blank %}{{ block.settings.title }}{% elsif product != blank %}{{ product.title }}{% endif %}</h3></div>
+            {% if product != blank %}<strong>{{ product.price | money }}</strong>{% endif %}
+          </div>
+          <a class="lumio-card__buy" href="{% if product != blank %}{{ product.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Comprar <span>→</span></a>
         </article>
       {% endfor %}
     </div>
   </div>
+
+  <div class="lumio-feature">
+    <div class="lumio-feature__copy"><span class="lumio-feature__star">✦</span><div><strong>Innovación que<br>mejora tu vida</strong><small>Descubre gadgets inteligentes seleccionados para ti.</small></div></div>
+    <div class="lumio-feature__products">
+      {% for block in section.blocks limit: 3 %}
+        {% assign feature_product = block.settings.image %}
+        {% if feature_product != blank %}{{ feature_product | image_url: width: 500 | image_tag: loading: 'lazy', class: 'lumio-feature__image', alt: '' }}{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="lumio-newsletter">
+    <div class="lumio-newsletter__copy"><span class="lumio-newsletter__icon">✉</span><div><strong>Únete a Lumio</strong><small>Suscríbete y recibe ofertas exclusivas,<br>novedades y mucho más.</small></div></div>
+    {% form 'customer', class: 'lumio-newsletter__form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="Tu correo electrónico" aria-label="Tu correo electrónico" required>
+      <button type="submit">Suscribirme</button>
+    {% endform %}
+  </div>
+
+  <div class="lumio-bottom-benefits">
+    <div><span>♙</span><strong>Pago 100% seguro</strong><small>Tus datos siempre protegidos.</small></div>
+    <div><span>☆</span><strong>Miles de clientes satisfechos</strong><small>Confianza que nos impulsa.</small></div>
+    <div><span>▱</span><strong>Envíos a toda España</strong><small>Llegamos a donde estés.</small></div>
+    <div><span>♨</span><strong>Productos en tendencia</strong><small>Lo último en tecnología.</small></div>
+  </div>
+
   <div class="lumio-marquee"><div><span>SMARTER EVERYDAY</span><i>✦</i><span>CURIOUS BY NATURE</span><i>✦</i><span>MADE FOR REAL LIFE</span><i>✦</i><span>SMARTER EVERYDAY</span><i>✦</i></div></div>
 </section>
 
