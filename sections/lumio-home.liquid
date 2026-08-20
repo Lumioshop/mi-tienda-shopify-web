@@ -7,6 +7,7 @@
 {% endstyle %}
 
 {{ 'section-lumio-home.css' | asset_url | stylesheet_tag }}
+{{ 'lumio-benefits-polish.css' | asset_url | stylesheet_tag }}
 
 <section class="lumio-landing" id="lumio-{{ section.id }}"{% if section.settings.background_image != blank %} style="--lumio-bg-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');"{% endif %}>
   <style>
@@ -87,7 +88,7 @@
   <div class="lumio-bottom-benefits">
     <div><span>♙</span><strong>Pago 100% seguro</strong><small>Tus datos siempre protegidos.</small></div>
     <div><span>☆</span><strong>Miles de clientes satisfechos</strong><small>Confianza que nos impulsa.</small></div>
-    <div><span>▱</span><strong>Envíos a toda España</strong><small>Llegamos a donde estés.</small></div>
+    <div><span>🚚</span><strong>Envíos a toda España</strong><small>Llegamos a donde estés.</small></div>
     <div><span>♨</span><strong>Productos en tendencia</strong><small>Lo último en tecnología.</small></div>
   </div>
 
